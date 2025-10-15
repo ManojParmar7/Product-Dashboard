@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+# 🛍️ Product Management Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **React-based Product Management Dashboard** built using **Create React App**, **Context API**, and **Tailwind CSS**.  
+It allows you to **manage products** with full **CRUD functionality**, **search**, **filtering**, and **pagination** in a clean, responsive, and user-friendly UI.
 
-## Available Scripts
+**🌐 Live Demo:** [https://product-dashboard-3enq.onrender.com/](https://product-dashboard-3enq.onrender.com/)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🧩 Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. [Features](#features)
+2. [Reusable Components](#reusable-components)
+3. [Project Structure](#project-structure)
+4. [Getting Started](#getting-started)
+5. [Available Scripts](#available-scripts)
+6. [Context API](#context-api)
+7. [API Integration](#api-integration)
+8. [Technologies Used](#technologies-used)
+9. [Future Improvements](#future-improvements)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🧱 CRUD Operations
 
-### `npm run build`
+- Create, view, edit, and delete products.
+- Default product image if none provided.
+- SweetAlert2 confirmation for delete action.
+- Toast notifications for success/error messages.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 📊 Product Table
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Displays: `Title`, `Price`, `Category`, `Description`, `Image`.
+- Actions: **View**, **Edit**, **Delete**.
+- Pagination (5 items per page).
+- Skeleton Loader while fetching data.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🔍 Search & Filter
 
-### `npm run eject`
+- Search by product title.
+- Filter dynamically by category.
+- Reset option to clear search and filters.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 🪟 Responsive Modals
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Create/Edit modal (`ProductModal`).
+- View modal (`ProductViewModal`).
+- Generic `Modal` component with customizable size.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### ⚙️ State Management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Context API** for global state management.
+- Centralized `ProductContext` and `AuthContext`.
+- Reducer handles all major actions like:
+  - `ADD_PRODUCT`
+  - `UPDATE_PRODUCT`
+  - `DELETE_PRODUCT`
+  - `SET_PRODUCTS`
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧱 Reusable Components
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project focuses on **component reusability** and **UI modularity**.  
+Below are key reusable components used across the dashboard:
 
-### Code Splitting
+| Component                 | Description                                                     |
+| ------------------------- | --------------------------------------------------------------- |
+| **Button.js**             | Custom button component for consistent UI and actions.          |
+| **Card.js**               | Used to display product summaries or highlights.                |
+| **Carousel.js**           | Reusable image slider for banners or featured products.         |
+| **Modal.js**              | Generic modal container used by Create/Edit/View modals.        |
+| **Input.js**              | Reusable form input with validation styling.                    |
+| **Select.js**             | Dropdown selection component used in filters and forms.         |
+| **Pagination.js**         | Dynamic pagination component (supports any list).               |
+| **Table.js**              | Displays dynamic data like product list in a structured format. |
+| **Toaster.js**            | Custom toast/notification handler for user feedback.            |
+| **SkeletonLoader.js**     | Placeholder loader during data fetching.                        |
+| **ErrorBoundary.js**      | Catches and displays fallback UI on component errors.           |
+| **Navbar.js / Footer.js** | Shared layout components for all pages.                         |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+All components are stored inside `src/components/` and are designed for **reusability**, **scalability**, and **maintainability**.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📂 Project Structure
 
-### Making a Progressive Web App
+├── public/
+│ └── index.html
+├── src/
+│ ├── api/
+│ │ ├── axiosInstance.js
+│ │ └── productApi.js
+│ ├── components/
+│ │ ├── Button.js
+│ │ ├── Card.js
+│ │ ├── Carousel.js
+│ │ ├── Footer.js
+│ │ ├── Navbar.js
+│ │ ├── Modal.js
+│ │ ├── Select.js
+│ │ ├── Pagination.js
+│ │ ├── Table.js
+│ │ ├── Toaster.js
+│ │ └── SkeletonLoader.js
+│ ├── context/
+│ │ ├── AuthContext/
+│ │ └── ProductContext/
+│ ├── pages/
+│ │ ├── Auth/
+│ │ │ ├── Login.js
+│ │ │ └── SignUp.js
+│ │ ├── Product/
+│ │ │ ├── ProductPage.js
+│ │ │ ├── Form.js
+│ │ │ └── View.js
+│ │ └── LandingPage.js
+│ ├── App.js
+│ └── index.js
+├── package.json
+└── README.md
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🏁 Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 1️⃣ Clone Repository
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+git clone https://github.com/ManojParmar7/Product-Dashboard.git
+cd REACT-PRODUCT-DASHBOARD
+```
