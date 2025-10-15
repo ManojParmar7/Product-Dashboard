@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -7,10 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthContext/provider";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-// Validation schema
 const loginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
+  username: Yup.string().required("Username is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
@@ -19,6 +18,7 @@ const loginSchema = Yup.object().shape({
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -27,7 +27,7 @@ export default function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -35,14 +35,12 @@ export default function Login() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const success = login(data.email, data.password); // login function from context
+      const success = login(data.username, data.password);
 
-      if (!success) {
-        // Show error toast
-        toast.error("Invalid email or password");
+      if (success) {
+        navigate("/products");
       }
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
@@ -54,7 +52,6 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-xl border border-blue-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        {/* Header */}
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
           Welcome to{" "}
           <span className="text-blue-600 font-extrabold">
@@ -66,17 +63,16 @@ export default function Login() {
           access Product Dashboard.
         </p>
 
-        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Controller
-            name="email"
+            name="username"
             control={control}
             render={({ field }) => (
               <Input
                 {...field}
-                label="Email"
-                placeholder="Enter your email"
-                error={errors.email?.message}
+                label="Username"
+                placeholder="Enter your username"
+                error={errors.username?.message}
               />
             )}
           />

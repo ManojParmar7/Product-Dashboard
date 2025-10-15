@@ -1,25 +1,39 @@
-import React from "react";
-
-export default function Select({ label, error, options = [], ...rest }) {
+export default function Select({
+  label,
+  value,
+  onChange,
+  options = [],
+  placeholder = "Select an option",
+  error,
+  className = "",
+}) {
   return (
-    <div className="w-full flex flex-col mb-4">
+    <div className={`flex flex-col w-full ${className}`}>
       {label && (
-        <label className="mb-1 font-medium text-gray-700">{label}</label>
+        <label className="text-sm font-medium text-gray-700 mb-1">
+          {label}
+        </label>
       )}
       <select
-        className={`px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          error ? "border-red-500" : "border-gray-300"
-        }`}
-        {...rest}
+        value={value || ""}
+        onChange={onChange}
+        className={`
+          border border-gray-300 rounded-md 
+          text-sm text-gray-700
+          px-3 py-2
+          h-[40px]   
+          focus:outline-none focus:ring-1 focus:ring-blue-500 
+          appearance-none bg-white
+        `}
       >
-        <option value="">Select {label}</option>
-        {options.map((opt, idx) => (
-          <option key={idx} value={opt.value}>
+        {placeholder && <option value="">{placeholder}</option>}
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
         ))}
       </select>
-      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
 }

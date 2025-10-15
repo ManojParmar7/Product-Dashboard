@@ -1,8 +1,7 @@
-// context/AuthContext/provider.js
 import React, { createContext, useReducer, useEffect } from "react";
 import { authReducer } from "./reducer";
 import { AuthActionTypes } from "./constants";
-import { toast } from "react-toastify";
+import { showToast } from "../../components/Toaster";
 
 export const AuthContext = createContext();
 
@@ -14,7 +13,6 @@ const initialState = {
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Sync user with localStorage
   useEffect(() => {
     if (state.user) {
       localStorage.setItem("authUser", JSON.stringify(state.user));
@@ -23,47 +21,56 @@ export const AuthProvider = ({ children }) => {
     }
   }, [state.user]);
 
-  // Login function
-  const login = (email, password) => {
+  const login = (username, password) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const foundUser = users.find(
-      (u) => u.email === email && u.password === password
-    );
+    const foundUser = users.find((u) => u.username === username);
 
     if (!foundUser) {
-      toast.error("Invalid email or password");
+      showToast("User not available!", "error");
       dispatch({
         type: AuthActionTypes.SET_ERROR,
-        payload: "Invalid credentials",
+        payload: "User not available",
+      });
+      return false;
+    }
+
+    if (foundUser.password !== password) {
+      showToast("Incorrect password!", "error");
+      dispatch({
+        type: AuthActionTypes.SET_ERROR,
+        payload: "Incorrect password",
       });
       return false;
     }
 
     dispatch({ type: AuthActionTypes.LOGIN, payload: foundUser });
-    toast.success("Login Successful!");
+    showToast(`Login successful! Welcome ${foundUser.username}`, "success");
     return true;
   };
 
-  // Signup function
   const signup = (newUser) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const emailExists = users.some((u) => u.email === newUser.email);
+    const userExists = users.some(
+      (u) => u.email === newUser.email || u.username === newUser.username
+    );
 
-    if (emailExists) {
-      toast.error("Email already exists!");
+    if (userExists) {
+      showToast("User already exists!", "error");
       return false;
     }
 
-    users.push(newUser);
+    const id = crypto.randomUUID ? crypto.randomUUID() : Date.now();
+    const userWithId = { id, ...newUser };
+    users.push(userWithId);
     localStorage.setItem("users", JSON.stringify(users));
-    dispatch({ type: AuthActionTypes.REGISTER, payload: newUser });
-    toast.success("Sign Up Successful!");
+
+    showToast("Signup successful! Please login", "success");
     return true;
   };
 
   const logout = () => {
     dispatch({ type: AuthActionTypes.LOGOUT });
-    toast.info("Logged out successfully");
+    showToast("Logged out successfully!", "success");
   };
 
   return (

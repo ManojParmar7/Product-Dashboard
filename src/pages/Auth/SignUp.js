@@ -1,12 +1,11 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { AuthContext } from "../../context/AuthContext/provider";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const signUpSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -36,29 +35,32 @@ export default function SignUp() {
       confirmPassword: "",
     },
   });
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const success = signup({
         username: data.username,
         email: data.email,
         password: data.password,
       });
+      if (success) {
+        navigate("/login");
+      }
 
       if (!success) return;
     } catch (err) {
-      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen mt-20 flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-xl border border-blue-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        {/* Header */}
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
           Sign Up
         </h2>
@@ -66,7 +68,6 @@ export default function SignUp() {
           Create your account to access Product Management
         </p>
 
-        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Controller
             name="username"
@@ -134,7 +135,6 @@ export default function SignUp() {
           </Button>
         </form>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-4">
           Already have an account?{" "}
           <a href="/login" className="text-blue-500 hover:underline">

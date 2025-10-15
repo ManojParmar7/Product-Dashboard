@@ -1,41 +1,10 @@
-// import clsx from "clsx";
-// import { ReactComponent as LoadingIcon } from "../components/Assets/loading.svg";
-
-// export default function Button({
-//   isLoading,
-//   color,
-//   className,
-//   children,
-//   startIcon,
-//   disabled,
-//   endIcon,
-//   ...rest
-// }) {
-//   return (
-//     <button
-//       disabled={disabled || isLoading}
-//       {...rest}
-//       className={clsx(
-//         color,
-//         "flex h-10 items-center gap-2 rounded-md px-4 py-2 text-center text-sm font-normal transition-all duration-200",
-//         className,
-//         { "cursor-not-allowed opacity-50": disabled || isLoading }
-//       )}
-//     >
-//       {startIcon && startIcon}
-//       {isLoading && <LoadingIcon className="w-5 h-5" />}
-//       {children}
-//       {endIcon && endIcon}
-//     </button>
-//   );
-// }
 import clsx from "clsx";
 import { ReactComponent as LoadingIcon } from "../components/Assets/loading.svg";
-
 export default function Button({
   isLoading = false,
-  color = "bg-blue-500 hover:bg-blue-600 text-white",
-  size = "md", // new prop: sm, md, lg
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
   className,
   children,
   startIcon,
@@ -43,11 +12,17 @@ export default function Button({
   disabled,
   ...rest
 }) {
-  // Define size classes
   const sizeClasses = {
     sm: "h-8 text-sm px-3",
     md: "h-10 text-sm px-4",
     lg: "h-12 text-base px-6",
+  };
+
+  const variantClasses = {
+    primary: "bg-blue-500 hover:bg-blue-600 text-white",
+    secondary: "bg-green-600 hover:bg-green-700 text-white",
+    danger: "bg-red-600 hover:bg-red-700 text-white",
+    gray: "bg-gray-500 hover:bg-gray-600 text-white",
   };
 
   return (
@@ -55,9 +30,10 @@ export default function Button({
       disabled={disabled || isLoading}
       {...rest}
       className={clsx(
-        color,
+        variantClasses[variant],
         "flex items-center gap-2 rounded-md font-normal transition-all duration-200 justify-center",
         sizeClasses[size],
+        fullWidth && "w-full",
         className,
         { "cursor-not-allowed opacity-50": disabled || isLoading }
       )}

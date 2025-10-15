@@ -1,4 +1,3 @@
-// context/AuthContext/reducer.js
 import { AuthActionTypes } from "./constants";
 
 export const authReducer = (state, action) => {

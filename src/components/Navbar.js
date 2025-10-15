@@ -7,7 +7,26 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import Button from "./Button";
+import Assets from "./Assets/assets";
+import { useLocation } from "react-router-dom";
+
 export default function Navbar() {
+  const location = useLocation();
+
+  const loginClass =
+    location.pathname === "/signup"
+      ? "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200"
+      : location.pathname === "/"
+      ? "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200"
+      : "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200";
+
+  const signupClass =
+    location.pathname === "/login"
+      ? "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200"
+      : location.pathname === "/"
+      ? "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200"
+      : "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200";
+
   const { user, logout } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,28 +37,26 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-extrabold tracking-tight text-gray-900"
-        >
-          MyBrand
-        </Link>
-
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          <Link to="/">
+            <img src={Assets.Logo} alt="Logo" className="w-32 md:w-36" />
+          </Link>
+        </div>
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            to="/"
-            className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
-          >
-            Home
-          </Link>
-
-          {user && (
+          {user ? (
             <Link
               to="/products"
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
             >
               Products
+            </Link>
+          ) : (
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+            >
+              Home
             </Link>
           )}
         </div>
@@ -48,16 +65,10 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           {!user ? (
             <>
-              <Link
-                to="/login"
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-200"
-              >
+              <Link to="/login" className={loginClass}>
                 Login
               </Link>
-              <Link
-                to="/signup"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200"
-              >
+              <Link to="/signup" className={signupClass}>
                 Sign Up
               </Link>
             </>
@@ -67,12 +78,9 @@ export default function Navbar() {
               <span className="font-semibold text-gray-800">
                 {user.username}
               </span>
-              <button
-                onClick={logout}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200"
-              >
+              <Button variant="danger" size="md" onClick={logout}>
                 Logout
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -107,7 +115,6 @@ export default function Navbar() {
       menuOpen ? "translate-x-0" : "translate-x-full"
     } transition-transform duration-300 ease-in-out md:hidden z-50`}
       >
-        {/* Sidebar Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
           <h2 className="text-xl font-semibold text-gray-800">Menu</h2>
           <button
@@ -118,7 +125,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Sidebar Menu Items */}
         <ul className="flex flex-col gap-6 p-6 bg-white/95 backdrop-blur-sm">
           {user && (
             <li className="flex items-center gap-2 text-gray-800">
@@ -170,8 +176,8 @@ export default function Navbar() {
           ) : (
             <li>
               <Button
-                size="sm"
-                color="bg-red-500 hover:bg-red-600 text-white"
+                variant="danger"
+                size="md"
                 onClick={() => {
                   logout();
                   setMenuOpen(false);

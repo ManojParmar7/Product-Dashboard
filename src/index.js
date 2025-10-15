@@ -4,11 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { AuthProvider } from "./context/AuthContext/provider";
+import { ProductProvider } from "./context/ProductContext/provider";
+import { ToastContainer } from "./components/Toaster";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <ProductProvider>
+        <ToastContainer />
+        <App />
+      </ProductProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 
