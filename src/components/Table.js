@@ -23,29 +23,29 @@ export default function ProductTable({
 
         <tbody>
           {products.length > 0 ? (
-            products.map((p) => (
-              <tr key={p.id} className="hover:bg-gray-50">
+            products.map((data) => (
+              <tr key={data?.id} className="hover:bg-gray-50">
                 <td className="p-3 align-top border-b">
                   <div className="flex items-start gap-3 flex-wrap sm:flex-nowrap">
                     <div className="w-20 sm:w-24 flex-shrink-0">
                       <div className="w-full h-16 sm:h-20 rounded overflow-hidden bg-gray-100">
                         <img
                           src={
-                            p.image instanceof File
-                              ? URL.createObjectURL(p.image)
-                              : p.image || ""
+                            data?.image instanceof File
+                              ? URL.createObjectURL(data?.image)
+                              : data?.image || ""
                           }
-                          alt={p.title}
+                          alt={data?.title}
                           className="w-full h-full object-cover"
                         />
                       </div>
 
-                      {p.rating && (
+                      {data?.rating && (
                         <div className="flex items-center gap-1 mt-1 justify-start sm:justify-start pl-2 sm:pl-0">
-                          <Rating rating={p.rating.rate} />
-                          {p.rating.count != null && (
+                          <Rating rating={data?.rating.rate} />
+                          {data?.rating.count != null && (
                             <span className="text-gray-500 text-xs">
-                              ({p.rating.count})
+                              ({data?.rating.count})
                             </span>
                           )}
                         </div>
@@ -54,10 +54,10 @@ export default function ProductTable({
 
                     <div className="min-w-0 flex-1">
                       <div className="font-semibold text-gray-900 truncate max-w-[200px] sm:max-w-xs">
-                        {p.title || "—"}
+                        {data?.title || "—"}
                       </div>
                       <div className="text-xs text-gray-500 mt-0.5 sm:hidden line-clamp-2">
-                        {p.description || "—"}
+                        {data?.description || "—"}
                       </div>
                     </div>
                   </div>
@@ -65,42 +65,42 @@ export default function ProductTable({
 
                 <td className="p-3 align-top border-b hidden sm:table-cell">
                   <div className="text-sm text-gray-600 line-clamp-2 max-w-xl">
-                    {p.description || "—"}
+                    {data?.description || "—"}
                   </div>
                 </td>
 
                 <td className="p-3 align-top border-b">
                   <span className="inline-block px-2 py-0.5 text-xs font-medium rounded bg-blue-50 text-blue-700 border border-blue-100">
-                    {p.category || "—"}
+                    {data?.category || "—"}
                   </span>
                 </td>
 
                 <td className="p-3 align-top border-b text-right">
                   <div className="font-semibold text-gray-900">
-                    {p.price != null
-                      ? `₹${Number(p.price).toLocaleString()}`
-                      : "₹0"}
+                    {data?.price != null
+                      ? `₹${Number(data?.price).toFixed(2).toLocaleString()}`
+                      : "₹0.00"}
                   </div>
                 </td>
 
                 <td className="p-3 align-top border-b">
                   <div className="flex flex-wrap gap-2 justify-start sm:justify-end">
                     <button
-                      onClick={() => onView(p)}
+                      onClick={() => onView(data)}
                       className="inline-flex items-center gap-2 px-3 py-1 rounded border text-gray-700 text-sm hover:bg-gray-50"
                     >
                       <FaEye />
                       <span className="hidden md:inline">View</span>
                     </button>
                     <button
-                      onClick={() => onEdit(p)}
+                      onClick={() => onEdit(data)}
                       className="inline-flex items-center gap-2 px-3 py-1 rounded border text-blue-600 text-sm hover:bg-blue-50"
                     >
                       <FaEdit />
                       <span className="hidden md:inline">Edit</span>
                     </button>
                     <button
-                      onClick={() => onDelete(p)}
+                      onClick={() => onDelete(data)}
                       className="inline-flex items-center gap-2 px-3 py-1 rounded border text-red-600 text-sm hover:bg-red-50"
                     >
                       <FaTrash />

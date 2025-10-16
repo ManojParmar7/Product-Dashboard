@@ -52,8 +52,8 @@ export default function ProductViewModal({ product }) {
           <span className="text-gray-900 font-semibold text-sm sm:text-base">
             ₹
             {product.price != null
-              ? Number(product.price).toLocaleString()
-              : "0"}
+              ? Number(product.price).toFixed(2).toLocaleString()
+              : "0.00"}
           </span>
         </div>
       </div>

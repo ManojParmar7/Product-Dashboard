@@ -63,12 +63,14 @@ export default function ProductForm({
   const handleFormSubmit = (data) => {
     const finalData = {
       ...data,
+      price: parseFloat(data.price).toFixed(2),
       image:
         data.image && data.image[0] instanceof File
           ? data.image[0]
           : data.image,
     };
     onSubmit(finalData);
+    console.log("finalData: ", finalData);
   };
 
   return (

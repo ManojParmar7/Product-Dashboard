@@ -22,15 +22,15 @@ const LandingPage = () => {
     {
       id: 1,
       name: "Espresso Roast",
-      price: 15.0,
+      price: 150.0,
       description: "Rich and bold espresso coffee beans for a strong cup.",
       image: Assets.Coffee1,
-      rating: 4.5,
+      rating: 400.5,
     },
     {
       id: 2,
       name: "French Roast",
-      price: 18.0,
+      price: 180.0,
       description: "Dark roasted coffee with a smoky flavor and bold finish.",
       image: Assets.Coffee2,
       rating: 4,
@@ -38,7 +38,7 @@ const LandingPage = () => {
     {
       id: 3,
       name: "Colombian Blend",
-      price: 12.5,
+      price: 120.5,
       description: "Smooth medium roast with a balanced and sweet flavor.",
       image: Assets.Coffee7,
       rating: 3.5,
@@ -46,7 +46,7 @@ const LandingPage = () => {
     {
       id: 4,
       name: "Morning Brew",
-      price: 10.0,
+      price: 100.0,
       description:
         "Light roast coffee perfect for a refreshing start to your day.",
       image: Assets.Coffee8,
