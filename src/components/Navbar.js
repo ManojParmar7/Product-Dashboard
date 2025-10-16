@@ -36,13 +36,16 @@ export default function Navbar() {
         bg-white/95 backdrop-blur-sm shadow-[0_2px_10px_rgba(0,0,0,0.08)] border-b border-gray-100`}
     >
       <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-        {/* Logo */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
           <Link to="/">
-            <img src={Assets.Logo} alt="Logo" className="w-32 md:w-36" />
+            <img
+              src={Assets.Logo}
+              alt="Logo"
+              onClick={() => window.location.reload()}
+              className="w-32 md:w-36"
+            />
           </Link>
         </div>
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           {user ? (
             <Link

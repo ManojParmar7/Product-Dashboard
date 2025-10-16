@@ -7,7 +7,6 @@ export const productApi = {
   },
 
   create: async (payload) => {
-    console.log("payload0-0-0-0-: ", payload);
     const res = await axiosInstance.post("/products", payload);
     return res.data;
   },
