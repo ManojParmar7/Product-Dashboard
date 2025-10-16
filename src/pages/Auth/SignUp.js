@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { AuthContext } from "../../context/AuthContext/provider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const signUpSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -137,9 +137,9 @@ export default function SignUp() {
 
         <p className="text-center text-sm text-gray-500 mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <Link to="/login" className="text-blue-500 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

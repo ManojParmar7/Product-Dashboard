@@ -14,6 +14,11 @@ const LandingPage = () => {
   const handleGetStarted = () => {
     if (!user) {
       navigate("/signup");
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -54,7 +59,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="bg-gray-50 min-h-screen flex flex-col mt-[4.75rem]">
       <main className="flex-grow">
         <section className="w-full">
           <ImageCarousel />
@@ -114,7 +119,20 @@ const LandingPage = () => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {products.map((prod) => (
-                <ProductCard key={prod.id} product={prod} user={user} />
+                <div
+                  key={prod.id}
+                  onClick={() => {
+                    if (user) {
+                      navigate(`/products`);
+                    } else {
+                      navigate("/signup");
+                    }
+                    window.scrollTo(0, 0);
+                  }}
+                  className="cursor-pointer"
+                >
+                  <ProductCard product={prod} user={user} />
+                </div>
               ))}
             </div>
           </div>

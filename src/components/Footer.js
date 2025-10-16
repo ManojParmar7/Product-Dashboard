@@ -30,10 +30,12 @@ const Footer = () => {
               <Link
                 to="/"
                 className="hover:text-blue-600 transition-colors duration-200"
+                onClick={() => window.scrollTo(0, 0)}
               >
                 Home
               </Link>
             </li>
+
             <li>
               <Link
                 to="/products"

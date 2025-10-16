@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { AuthContext } from "../../context/AuthContext/provider";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -104,12 +104,12 @@ export default function Login() {
 
         <div className="text-center text-sm mt-6 text-gray-600">
           Don’t have an account?{" "}
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="text-blue-500 hover:underline font-medium"
           >
             Sign Up
-          </a>
+          </Link>
         </div>
       </div>
     </div>
