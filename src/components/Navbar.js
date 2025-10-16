@@ -38,12 +38,7 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
           <Link to="/">
-            <img
-              src={Assets.Logo}
-              alt="Logo"
-              onClick={() => window.location.reload()}
-              className="w-32 md:w-36"
-            />
+            <img src={Assets.Logo} alt="Logo" className="w-32 md:w-36" />
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-8">
